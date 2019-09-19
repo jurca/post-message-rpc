@@ -1,0 +1,31 @@
+{
+  "name": "@jurca/post-message-rpc",
+  "version": "0.0.0",
+  "description": "An RPC-like library for contexts connected via the postMessage API with TypeScript support.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tslint --project . && jest && stryker run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jurca/post-message-rpc.git"
+  },
+  "keywords": [
+    "postMessage",
+    "rpc",
+    "typescript"
+  ],
+  "author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jurca/post-message-rpc/issues"
+  },
+  "homepage": "https://github.com/jurca/post-message-rpc#readme",
+  "dependencies": {
+    "@jurca/post-message-p2p": "^1.0.2"
+  },
+  "devDependencies": {
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  }
+}
