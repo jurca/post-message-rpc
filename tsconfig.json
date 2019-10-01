@@ -6,6 +6,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
 
     "lib": [
       "dom",
@@ -24,7 +26,10 @@
 
     "esModuleInterop": true,
 
-    "inlineSourceMap": true,
     "inlineSources": true
-  }
+  },
+  "exclude": [
+    "__tests__",
+    "dist"
+  ]
 }

@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "description": "An RPC-like library for contexts connected via the postMessage API with TypeScript support.",
   "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "esm/index.d.ts",
+  "types": "cjs/index.d.ts",
   "scripts": {
+    "compile:cjs": "tsc --outDir dist/cjs --target es5 --module commonjs",
+    "build": "rm -rf dist && npm test && npm run compile:cjs && cp LICENSE package.json README.md dist/",
     "test": "tslint --project . && jest && stryker run"
   },
   "repository": {
