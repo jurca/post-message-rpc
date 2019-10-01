@@ -12,11 +12,11 @@ interface IInvocation {
 }
 
 type RpcApi = { // tslint:disable-line interface-over-type-literal
-  [procedureName: string]: undefined | ((...args: unknown[]) => Promise<unknown>),
+  [procedureName: string]: undefined | ((...args: any[]) => Promise<unknown>),
 }
 
 type RpcApiClient = { // tslint:disable-line interface-over-type-literal
-  [procedureName: string]: <R>(...args: unknown[]) => Promise<R>,
+  [procedureName: string]: (...args: any[]) => Promise<any>,
 }
 
 const HOST_ID = Date.now().toString(36)
