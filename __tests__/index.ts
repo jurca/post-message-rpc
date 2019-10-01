@@ -182,6 +182,91 @@ describe('createServer', () => {
     )
   })
 
+  it('should reject invalid messages', () => {
+    const procedure = jest.fn()
+    createServer(0, [], {foo: procedure})
+    const replyListener = jest.fn()
+    const serverListener = (addEventListener as any).calls[0][1]
+    serverListener({
+      data: {
+        channel: 0,
+        data: null,
+        messageId: 'msgId',
+      },
+      origin: '*',
+      source: {
+        postMessage: replyListener,
+      },
+    })
+    expect(procedure).not.toHaveBeenCalled()
+    expect(replyListener).toHaveBeenCalledTimes(1)
+
+    serverListener({
+      data: {
+        channel: 0,
+        data: '',
+        messageId: 'msgId',
+      },
+      origin: '*',
+      source: {
+        postMessage: replyListener,
+      },
+    })
+    expect(procedure).not.toHaveBeenCalled()
+    expect(replyListener).toHaveBeenCalledTimes(2)
+
+    serverListener({
+      data: {
+        channel: 0,
+        data: {
+          callId: '',
+          procedure: '',
+        },
+        messageId: 'msgId',
+      },
+      origin: '*',
+      source: {
+        postMessage: replyListener,
+      },
+    })
+    expect(procedure).not.toHaveBeenCalled()
+    expect(replyListener).toHaveBeenCalledTimes(3)
+
+    serverListener({
+      data: {
+        channel: 0,
+        data: {
+          arguments: [],
+          procedure: '',
+        },
+        messageId: 'msgId',
+      },
+      origin: '*',
+      source: {
+        postMessage: replyListener,
+      },
+    })
+    expect(procedure).not.toHaveBeenCalled()
+    expect(replyListener).toHaveBeenCalledTimes(4)
+
+    serverListener({
+      data: {
+        channel: 0,
+        data: {
+          arguments: [],
+          callId: '',
+        },
+        messageId: 'msgId',
+      },
+      origin: '*',
+      source: {
+        postMessage: replyListener,
+      },
+    })
+    expect(procedure).not.toHaveBeenCalled()
+    expect(replyListener).toHaveBeenCalledTimes(5)
+  })
+
   afterEach(() => {
     (addEventListener as any).calls.splice(0)
     ;(postMessage as any).calls.splice(0) // tslint:disable-line align whitespace
