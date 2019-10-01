@@ -2,7 +2,9 @@
   "name": "@jurca/post-message-rpc",
   "version": "0.0.0",
   "description": "An RPC-like library for contexts connected via the postMessage API with TypeScript support.",
-  "main": "index.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
   "scripts": {
     "test": "tslint --project . && jest && stryker run"
   },
@@ -22,7 +24,8 @@
   },
   "homepage": "https://github.com/jurca/post-message-rpc#readme",
   "dependencies": {
-    "@jurca/post-message-p2p": "^1.0.2"
+    "@jurca/post-message-p2p": "^1.1.2",
+    "key-master": "^4.1.0"
   },
   "devDependencies": {
     "tslint": "^5.20.0",
