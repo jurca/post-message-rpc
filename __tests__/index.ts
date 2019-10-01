@@ -44,6 +44,7 @@ describe('createClient', () => {
       procedure: 'foo',
     })
     expect(typeof callMessage.data.callId).toBe('string')
+    expect(/:-2gosa7pa2gu:-2gosa7pa2gu$/.test(callMessage.data.callId)).toBe(true)
     globalMessageListener({
       data: {
         channel: 0,
