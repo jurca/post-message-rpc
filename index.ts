@@ -12,7 +12,7 @@ interface IInvocation {
 }
 
 type RpcApi = { // tslint:disable-line interface-over-type-literal
-  [procedureName: string]: undefined | ((...args: any[]) => Promise<unknown>),
+  [procedureName: string]: undefined | ((...args: any[]) => unknown | Promise<unknown>),
 }
 
 type RpcApiClient = { // tslint:disable-line interface-over-type-literal
