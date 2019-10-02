@@ -7,6 +7,9 @@
   "scripts": {
     "compile:cjs": "tsc --outDir dist/cjs --target es5 --module commonjs",
     "build": "rm -rf dist && npm test && npm run compile:cjs && cp LICENSE package.json README.md dist/",
+    "prepublishOnly": "echo 'Run \\'npm run publish-package\\' instead' && exit 1",
+    "check-workspace": "git diff --exit-code >/dev/null && git diff --cached --exit-code >/dev/null",
+    "publish-package": "npm run check-workspace && git push && git push --tags && npm run build && npm publish --access=public --ignore-scripts dist",
     "test": "tslint --project . && jest && stryker run"
   },
   "repository": {
