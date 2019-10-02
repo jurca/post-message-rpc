@@ -1,6 +1,6 @@
 {
   "name": "@jurca/post-message-rpc",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An RPC-like library for contexts connected via the postMessage API with TypeScript support.",
   "main": "cjs/index.js",
   "types": "cjs/index.d.ts",
