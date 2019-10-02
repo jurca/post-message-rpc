@@ -98,7 +98,7 @@ export function createServer<P extends RpcApi>(channel: unknown, clientOrigins: 
           reject(error)
         }
       })
-      callTry.then(
+      callTry = callTry.then(
         (result: unknown) => sendResultToClient(peer, channel, origin, call.callId, null, result),
       ).catch(
         (error) => sendResultToClient(peer, channel, origin, call.callId, error, null),
