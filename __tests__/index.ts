@@ -267,6 +267,68 @@ describe('createServer', () => {
     expect(replyListener).toHaveBeenCalledTimes(5)
   })
 
+  it('should response with an error if a non-existent procedure is invoked', async () => {
+    createServer(0, [], {foo: 'return 1'} as any)
+    const serverListener = (addEventListener as any).calls[0][1]
+    const peer = {
+      postMessage: jest.fn(),
+    }
+    serverListener({
+      data: {
+        channel: 0,
+        data: {
+          arguments: [],
+          callId: 'callId',
+          procedure: 'foo',
+        },
+        messageId: 'msg1d',
+      },
+      origin: '*',
+      source: peer,
+    })
+    // accept reply connection handshake
+    globalMessageListener({
+      data: {
+        channel: 0,
+        messageId: peer.postMessage.mock.calls[0][0].messageId,
+        received: true,
+      },
+      origin: '*',
+      source: peer,
+    })
+
+    // await the reply message
+    while (peer.postMessage.mock.calls.length < 3) {
+      await Promise.resolve()
+    }
+    const reply = peer.postMessage.mock.calls[2][0].data
+    expect(reply.callId).toBe('callId')
+    expect(reply.error.message).toBe('The procedure foo is not provided by this server')
+
+    const randomProcedure = `bar ${Math.random()}`
+    serverListener({
+      data: {
+        channel: 0,
+        data: {
+          arguments: [],
+          callId: 'callId123',
+          procedure: randomProcedure,
+        },
+        messageId: 'msgId',
+      },
+      origin: '*',
+      source: peer,
+    })
+
+    // await the reply message
+    while (peer.postMessage.mock.calls.length < 5) {
+      await Promise.resolve()
+    }
+    const reply2 = peer.postMessage.mock.calls[4][0].data
+    expect(reply2.callId).toBe('callId123')
+    expect(reply2.error.message).toBe(`The procedure ${randomProcedure} is not provided by this server`)
+  })
+
   afterEach(() => {
     (addEventListener as any).calls.splice(0)
     ;(postMessage as any).calls.splice(0) // tslint:disable-line align whitespace
