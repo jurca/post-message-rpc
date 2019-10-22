@@ -143,6 +143,6 @@ function sendResultToClient(
       callId,
       result,
     }
-  const replyConnectionPromise = replyConnections.get(peer).get(channel).get(origin) as ReturnType<typeof connect>
+  const replyConnectionPromise = replyConnections.get(origin).get(channel).get(peer)
   return replyConnectionPromise.then((sendMessage) => sendMessage(wrappedResult))
 }
