@@ -1,5 +1,6 @@
 import {connect, createAgent, IConnectOptions, listen} from '@jurca/post-message-p2p'
 import mapFactory from 'key-master'
+import SimpleMap from './SimpleMap'
 
 interface IPostMessageImplementor {
   postMessage: typeof postMessage
@@ -117,9 +118,12 @@ export function createServer<P extends RpcApi>(channel: unknown, clientOrigins: 
   })
 }
 
-const replyConnections = mapFactory((origin: string) => mapFactory((channel: unknown) => mapFactory(
-  (peer: IPostMessageImplementor) => connect(peer, {channel, origin}),
-)))
+const replyConnections = mapFactory((origin: string) => mapFactory((channel: unknown) => {
+  return mapFactory(
+    (peer: IPostMessageImplementor) => connect(peer, {channel, origin}),
+    new SimpleMap(),
+  )
+}))
 
 function sendResultToClient(
   peer: IPostMessageImplementor,
