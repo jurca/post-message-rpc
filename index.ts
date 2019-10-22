@@ -117,8 +117,8 @@ export function createServer<P extends RpcApi>(channel: unknown, clientOrigins: 
   })
 }
 
-const replyConnections = mapFactory((peer: IPostMessageImplementor) => mapFactory((channel: unknown) => mapFactory(
-  (origin: string) => connect(peer, {channel, origin}),
+const replyConnections = mapFactory((origin: string) => mapFactory((channel: unknown) => mapFactory(
+  (peer: IPostMessageImplementor) => connect(peer, {channel, origin}),
 )))
 
 function sendResultToClient(
